@@ -18,7 +18,7 @@ Some of the more popular trackers are:
 
 These services all make use of their limited scope by adding specialized features. Music trackers allow browsing by artist, rating websites aggregate ratings of all users of the service, TV show trackers send notifications about newly aired episodes. They usually keep a public catalogue of their content, making it easier to add an item that other people already added without inputting all the details. They also often provide social features, such as adding friends, sending recommendations, posting public reviews, and sending private messages to others.
 
-## Audience persona
+## Public probe
 
 The idea of this project came out of a personal need, so conveniently I am able to design it with myself in mind as the target audience. I am a user of many of the websites listed in [market research](#market-research), and would like to consolidate them into a single customizable interface so that my overall experience is smoother and more personal.
 
@@ -29,3 +29,37 @@ Below is an aggregation of collected opinions:
 -   Adding items for the first time is a time-consuming process. Ideally I'd be able to browse existing information sources, and import from websites I'm already using.
 -   I really enjoy using the feature where I can add others to my friends list and send them recommendations.
 -   I want to create custom tags that I can assign to items, to track any details I want about the items. Then I'd like to filter my items by collection and tag.
+
+## Scope
+
+Having confirmed that the idea has potential users and what they're most interested in seeing, we can determine which features will go into the MVP, and which are optional to some degree.
+
+Critical:
+
+-   Single-page app design for the best possible responsiveness and user experience,
+-   Multiple users per deployment, with registration and login,
+-   Support for multiple arbitrary collections per user,
+-   Collection editor to add/remove/modify/reorder fields, with many fields types available,
+-   Item editor to add/modify/remove items from previously created collections,
+-   Collection viewer with sorting and filtering functionality,
+-   Frontpage explaining the purpose of the webapp,
+-   Dashboard for logged-in users, showing featured items and allowing them to navigate to their collections easily,
+-   Responsive and compliant design.
+
+High:
+
+-   Collection templates for getting started more easily,
+-   Friend list functionality, allowing users to add other users as friends knowing their username, and displaying their latest activity on the dashboard,
+-   Feature to send recommendations to users on the friend list, and manage received recommendations by deleting them or making them as fulfilled.
+
+Medium:
+
+-   Per-item image upload,
+-   Item suggestions from content catalogues like MusicBrainz or Mobygames,
+-   Import of items from other trackers, if they have an export feature,
+-   Data export feature into a format like JSON.
+
+Low:
+
+-   Ability for users to publicly comment on others' profiles,
+-   Private messages between users.
