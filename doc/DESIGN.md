@@ -17,3 +17,9 @@ Some of the more popular trackers are:
 -   [Trakt](https://trakt.tv): TV show and movie watching tracker. 
 
 These services all make use of their limited scope by adding specialized features. Music trackers allow browsing by artist, rating websites aggregate ratings of all users of the service, TV show trackers send notifications about newly aired episodes. They usually keep a public catalogue of their content, making it easier to add an item that other people already added without inputting all the details. They also often provide social features, such as adding friends, sending recommendations, posting public reviews, and sending private messages to others.
+
+## Audience persona
+
+The idea of this project came out of a personal need, so conveniently I am able to design it with myself in mind as the target audience. I am a user of many of the websites listed in [market research](#market-research), and would like to consolidate them into a single customizable interface so that my overall experience is smoother and more personal.
+
+I also have contact with a few other people who track one or more of their collections. I expect to be able to interview them to make a better and more attractive product.
