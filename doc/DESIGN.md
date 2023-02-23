@@ -23,3 +23,9 @@ These services all make use of their limited scope by adding specialized feature
 The idea of this project came out of a personal need, so conveniently I am able to design it with myself in mind as the target audience. I am a user of many of the websites listed in [market research](#market-research), and would like to consolidate them into a single customizable interface so that my overall experience is smoother and more personal.
 
 I also have contact with a few other people who track one or more of their collections. I expect to be able to interview them to make a better and more attractive product.
+
+Below is an aggregation of collected opinions:
+
+-   Adding items for the first time is a time-consuming process. Ideally I'd be able to browse existing information sources, and import from websites I'm already using.
+-   I really enjoy using the feature where I can add others to my friends list and send them recommendations.
+-   I want to create custom tags that I can assign to items, to track any details I want about the items. Then I'd like to filter my items by collection and tag.
