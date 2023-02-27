@@ -63,3 +63,9 @@ Low:
 
 -   Ability for users to publicly comment on others' profiles,
 -   Private messages between users.
+
+## Information flow
+
+This project involves a non-trivial number of models and screens. The flowchart below outlines the flow between screens.
+
+[Flowchart of information flow between components](information-flow.png)
