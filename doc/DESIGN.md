@@ -127,3 +127,9 @@ To realize the above mockup, these models will be required:
 -   SelectionValue
 -   RatingValue
 -   Tag
+
+The projected table layouts and their relationships are sketched below:
+
+![Diagram of database tables, fields and relationships](database.png)
+
+Editable version of the diagram in the [draw.io](https://github.com/jgraph/drawio) format available [here](database.drawio).
