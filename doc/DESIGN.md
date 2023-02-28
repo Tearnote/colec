@@ -57,7 +57,8 @@ Medium:
 -   Per-item image upload,
 -   Item suggestions from content catalogues like MusicBrainz or Mobygames,
 -   Import of items from other trackers, if they have an export feature,
--   Data export feature into a format like JSON.
+-   Data export feature into a format like JSON,
+-   Inline help with pop-up assistance.
 
 Low:
 
@@ -71,3 +72,44 @@ This project involves a non-trivial number of models and screens. The flowchart 
 ![Flowchart of information flow between components](information-flow.png)
 
 Editable version of the flowchart in the [draw.io](https://github.com/jgraph/drawio) format available [here](information-flow.drawio).
+
+## Wireframes
+
+Landing page (desktop)
+
+![Wireframe of the landing page on desktop](wireframes/landing-desktop.png)
+
+Landing page (mobile)
+
+![Wireframe of the landing page on mobile](wireframes/landing-mobile.png)
+
+User dashboard (desktop)
+
+![Wireframe of the user dashboard on desktop](wireframes/dashboard-desktop.png)
+
+User dashboard (mobile)
+
+![Wireframe of the user dashboard on mobile](wireframes/dashboard-mobile.png)
+
+Sign-in modal
+
+![Wireframe of the sign-in modal](wireframes/sign-in.png)
+
+Collection list modal
+
+![Wireframe of the collection list modal](wireframes/collection-list.png)
+
+Collection editor modal
+
+![Wireframe of the collection editor modal](wireframes/collection-editor.png)
+
+Item list modal
+
+![Wireframe of the item list modal](wireframes/item-list.png)
+
+
+Item editor modal
+
+![Wireframe of the item editor modal](wireframes/item-editor.png)
+
+The wireframe set in [Balsamiq](https://balsamiq.com/wireframes/) format is available [here](wireframes/wireframes.bmpr).
