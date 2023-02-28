@@ -113,3 +113,17 @@ Item editor modal
 ![Wireframe of the item editor modal](wireframes/item-editor.png)
 
 The wireframe set in [Balsamiq](https://balsamiq.com/wireframes/) format is available [here](wireframes/wireframes.bmpr).
+
+## Database design
+
+To realize the above mockup, these models will be required:
+
+-   User (automatic)
+-   Collection
+-   Field
+-   SelectionItem
+-   Item
+-   TextValue
+-   SelectionValue
+-   RatingValue
+-   Tag
