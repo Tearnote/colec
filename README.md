@@ -1,6 +1,6 @@
 # Colec: a collection tracker webapp
 
-*Colec* is a single-page Django webapp that allows users to track any number of collections, of any kind - books, movies, videogames, you name it. It was originally made for [Code Institute](https://codeinstitute.net/)'s 4th submission project.
+*Colec* is a single-page webapp that allows users to track any number of collections, of any kind - books, movies, videogames, you name it. It was originally made for [Code Institute](https://codeinstitute.net/)'s 4th submission project.
 
 ## Important notes
 
