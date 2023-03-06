@@ -10,3 +10,9 @@ The documentation is split across two files:
 -   [DESIGN.md](doc/DESIGN.md): UX design notes crafting during early stages of development. The design process is described entirely, from the concept and market research, through information structuring to visual design principles and color palettes.
 
 The project is managed via a [GitHub project](https://github.com/users/Tearnote/projects/1/views/1). Issues are created in a "User story" format, and assigned size/complexity and importance. Each issue contains a title, user story sentence, and a list of technical expectations.
+
+## Technologies used
+
+-   Python 3: Used for the backend portion of the app
+-   HTML5+CSS3: Design of the frontend
+-   Javascript (ES6): Fetching and updating data from the frontend
