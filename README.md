@@ -21,3 +21,4 @@ The project is managed via a [GitHub project](https://github.com/users/Tearnote/
 
 -   [Django 4](https://www.djangoproject.com): backend framework used to serve the app to the browser and as a RESTful interface to manipulate the models
 -   [Backbone.js](https://backbonejs.org/): frontend library for structuring single-page applications
+-   [Pico.css](https://picocss.com): CSS framework to improve base styles
