@@ -16,3 +16,8 @@ The project is managed via a [GitHub project](https://github.com/users/Tearnote/
 -   Python 3: Used for the backend portion of the app
 -   HTML5+CSS3: Design of the frontend
 -   Javascript (ES6): Fetching and updating data from the frontend
+
+## Dependencies
+
+-   [Django 4](https://www.djangoproject.com): backend framework used to serve the app to the browser and as a RESTful interface to manipulate the models
+-   [Backbone.js](https://backbonejs.org/): frontend library for structuring single-page applications
