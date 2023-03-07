@@ -24,6 +24,7 @@
         <script src="{% static 'js/underscore.min.js' %}" defer></script>
         <script src="{% static 'js/backbone.min.js' %}" defer></script>
     {% endif %}
+    <script src="{% static 'web/js/app.js' %}" defer></script>
 </head>
 <body>
 
@@ -73,6 +74,17 @@
 <footer class="container-fluid">
     <p>Colec, Copyright 2023</p>
 </footer>
+
+<script type="text/template" id="sign-in-modal-template">
+    <dialog open>
+        <article>
+            <p>Sign-in content goes here</p>
+            <footer>
+                <a href="#" role="button">Sign in</a>
+            </footer>
+        </article>
+    </dialog>
+</script>
 
 </body>
 </html>
