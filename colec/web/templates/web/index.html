@@ -17,11 +17,11 @@
 
     {% if debug %}
         <script src="{% static 'js/jquery-3.6.3.slim.js' %}" defer></script>
-        <script src="{% static 'js/underscore-esm.js' %}" defer></script>
+        <script src="{% static 'js/underscore.js' %}" defer></script>
         <script src="{% static 'js/backbone.js' %}" defer></script>
     {% else %}
         <script src="{% static 'js/jquery-3.6.3.slim.min.js' %}" defer></script>
-        <script src="{% static 'js/underscore-esm.min.js' %}" defer></script>
+        <script src="{% static 'js/underscore.min.js' %}" defer></script>
         <script src="{% static 'js/backbone.min.js' %}" defer></script>
     {% endif %}
 </head>
