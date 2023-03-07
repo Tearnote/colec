@@ -27,7 +27,10 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = True if 'DJANGO_DEBUG' in os.environ else False
 
 ALLOWED_HOSTS = []
-
+if 'DJANGO_HOST' in os.environ:
+    ALLOWED_HOSTS.append(os.environ['DJANGO_HOST'])
+if not DEBUG and not ALLOWED_HOSTS:
+    raise RuntimeError('DJANGO_HOST must be set if DJANGO_DEBUG is not present')
 
 # Application definition
 
