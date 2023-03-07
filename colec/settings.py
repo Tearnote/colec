@@ -83,6 +83,15 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+} if DEBUG else {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'colec',
+        'USER': os.environ.get('COLEC_POSTGRES_USER', 'colec'),
+        'PASSWORD': os.environ.get('COLEC_POSTGRES_PASSWORD', 'colec'),
+        'HOST': os.environ.get('COLEC_POSTGRES_HOST', '127.0.0.1'),
+        'PORT': os.environ.get('COLEC_POSTGRES_PORT', 5432),
+    }
 }
 
 
