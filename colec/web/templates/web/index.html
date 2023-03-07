@@ -9,7 +9,11 @@
     <title>Colec. Track your everything</title>
 
     <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/pico.css' %}">
+    {% if debug %}
+        <link rel="stylesheet" href="{% static 'css/pico.css' %}">
+    {% else %}
+        <link rel="stylesheet" href="{% static 'css/pico.min.css' %}">
+    {% endif %}
     <link rel="stylesheet" href="{% static 'web/css/style.css' %}">
 </head>
 <body>
