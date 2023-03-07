@@ -1,0 +1,23 @@
+#eyecatch {
+    text-align: center;
+}
+
+#everything {
+    position: relative;
+}
+
+#everything::after {
+    display: block;
+    position: absolute;
+    bottom: 1.2em;
+    left: 0;
+    content: "games.";
+}
+
+#everything::before {
+    display: block;
+    position: absolute;
+    bottom: 2.4em;
+    left: 0;
+    content: "books.";
+}
