@@ -6,10 +6,18 @@ $(document).on("click", "a", function(e) {
 
 const signInModalTemplateText = $("#sign-in-modal-template").html();
 const signInModalTemplate = _.template(signInModalTemplateText);
+const landingPageTemplateText = $("#landing-page-template").html();
+const landingPageTemplate = _.template(landingPageTemplateText);
 
 let App = Backbone.Router.extend({
     routes: {
+        "": "index",
         "signin": "signin",
+    },
+    index: function() {
+        const html = landingPageTemplate();
+        let el = $("#content");
+        el.html(html);
     },
     signin: function() {
         const html = signInModalTemplate();

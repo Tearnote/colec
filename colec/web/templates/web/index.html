@@ -37,7 +37,13 @@
     </nav>
 </header>
 
-<main class="container-fluid">
+<main class="container-fluid" id="content"></main>
+
+<footer class="container-fluid">
+    <p>Colec, Copyright 2023</p>
+</footer>
+
+<template id="landing-page-template">
     <section id="eyecatch">
         <h2>Track your <span id="everything">everything.</span></h2>
         <a href="#" role="button">Sign up</a>
@@ -63,17 +69,14 @@
         <article>
             <header><h3>Own your data.</h3></header>
             <p>
-                <em>Colec</em> is opensource, and can be hosted by anyone. Your
-                collections can be exported to a JSON format, for later import
-                in a different instance, or for use by any external utilities.
+                <em>Colec</em> is opensource, and can be hosted by anyone.
+                Your collections can be exported to a JSON format, for later
+                import in a different instance, or for use by any external
+                utilities.
             </p>
         </article>
     </section>
-</main>
-
-<footer class="container-fluid">
-    <p>Colec, Copyright 2023</p>
-</footer>
+</template>
 
 <template id="sign-in-modal-template">
     <dialog open>
