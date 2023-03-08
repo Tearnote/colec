@@ -1,10 +1,3 @@
-// Prevent links from reloading the page
-$(document).on("click", "a", function(e) {
-    e.preventDefault();
-    const href = $(this).attr("href");
-    Backbone.history.navigate(href, {trigger: true});
-});
-
 const App = Backbone.Router.extend({
     contentEl: document.getElementById("content"),
     modalEl: document.getElementById("modal"),
@@ -46,3 +39,17 @@ const App = Backbone.Router.extend({
 // Begin routing
 let app = new App();
 Backbone.history.start({pushState: true});
+
+// Prevent links from reloading the page
+$(document).on("click", "a", function(e) {
+    e.preventDefault();
+    const href = $(this).attr("href");
+    Backbone.history.navigate(href, {trigger: true});
+});
+
+// Make modals closeable by clicking outside of them
+$(app.modalEl).on("click", function(e) {
+    const modalContent = this.querySelector("article");
+    if (modalContent.contains(e.target)) return;
+    history.back();
+});
