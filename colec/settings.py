@@ -36,6 +36,7 @@ if not DEBUG and not ALLOWED_HOSTS:
 INSTALLED_APPS = [
     'colec.web',
     'colec.api',
+    'colec.auth_api',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
