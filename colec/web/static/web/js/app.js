@@ -8,30 +8,38 @@ $(document).on("click", "a", function(e) {
 const App = Backbone.Router.extend({
     contentEl: document.getElementById("content"),
     modalEl: document.getElementById("modal"),
-    modalShown: false,
+    contentShown: null,
+    modalShown: null,
     routes: {
         "": "index",
         "signin": "signin",
     },
     index() {
         this.hideModal();
-        this.contentEl.innerHTML = Templates.landingPage();
+        this.showContent("landingPage");
     },
     signin() {
-        this.index();
-        this.showModal(Templates.signInModal());
+        if (!this.contentShown) this.index();
+        this.showModal("signInModal");
     },
-    showModal(html) {
+
+    showContent(templateName) {
+        if (this.contentShown === templateName) return;
+        this.contentEl.innerHTML = Templates[templateName]();
+        this.contentShown = templateName;
+    },
+    showModal(templateName) {
+        if (this.modalShown === templateName) return;
         if (this.modalShown) this.hideModal();
-        this.modalEl.innerHTML = html;
+        this.modalEl.innerHTML = Templates[templateName]();
         document.documentElement.classList.add("modal-is-open");
-        this.modalShown = true;
+        this.modalShown = templateName;
     },
     hideModal() {
         if (!this.modalShown) return;
         this.modalEl.replaceChildren();
         document.documentElement.classList.remove("modal-is-open");
-        this.modalShown = false;
+        this.modalShown = null;
     },
 });
 
