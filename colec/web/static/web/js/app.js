@@ -16,13 +16,12 @@ let App = Backbone.Router.extend({
     },
     index: function() {
         const html = landingPageTemplate();
-        let el = $("#content");
-        el.html(html);
+        $("#content").html(html);
     },
     signin: function() {
+        this.index();
         const html = signInModalTemplate();
-        let el = $.parseHTML(html);
-        $("body").append(el);
+        $("#modal").html(html);
     },
 });
 let app = new App();
