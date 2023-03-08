@@ -58,3 +58,22 @@ document.addEventListener("keydown", function(e) {
     if (e.key === "Escape" && app.modalShown)
         history.back();
 });
+
+// Sign-in handler
+$(document).on("click", "#sign-in-button", function(e) {
+    e.preventDefault();
+    const inputs = document.getElementById("sign-in-form").elements;
+    const token = btoa(`${inputs.username.value}:${inputs.password.value}`);
+    $.ajax("/auth/login/", {
+        method: "POST",
+        headers: {
+            Authorization: `Basic ${token}`,
+        },
+        success: function() {
+            console.log("Sign-in success");
+        },
+        error: function() {
+            console.log("Sign-in error");
+        }
+    });
+});
