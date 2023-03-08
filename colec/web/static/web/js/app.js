@@ -6,19 +6,18 @@ $(document).on("click", "a", function(e) {
 });
 
 // Primary router
-const templates = new Templates();
 let App = Backbone.Router.extend({
     routes: {
         "": "index",
         "signin": "signin",
     },
     index: function() {
-        const html = templates.landingPage();
+        const html = Templates.landingPage();
         $("#content").html(html);
     },
     signin: function() {
         this.index();
-        const html = templates.signInModal();
+        const html = Templates.signInModal();
         $("#modal").html(html);
         $("html").addClass("modal-is-open");
     },
