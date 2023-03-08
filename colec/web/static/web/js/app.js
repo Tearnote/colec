@@ -22,6 +22,7 @@ let App = Backbone.Router.extend({
         this.index();
         const html = signInModalTemplate();
         $("#modal").html(html);
+        $("html").addClass("modal-is-open");
     },
 });
 let app = new App();
