@@ -6,16 +6,18 @@ $(document).on("click", "a", function(e) {
 });
 
 const App = Backbone.Router.extend({
+    contentEl: document.getElementById("content"),
+    modalEl: document.getElementById("modal"),
     routes: {
         "": "index",
         "signin": "signin",
     },
     index() {
-        document.getElementById("content").innerHTML = Templates.landingPage();
+        this.contentEl.innerHTML = Templates.landingPage();
     },
     signin() {
         this.index();
-        document.getElementById("modal").innerHTML = Templates.signInModal();
+        this.modalEl.innerHTML = Templates.signInModal();
         document.documentElement.classList.add("modal-is-open");
     },
 });
