@@ -1,21 +1,22 @@
-from django.contrib.auth.models import User
 from django.urls import path, include
 from rest_framework import serializers, viewsets, routers
 
+from .models import Collection
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+
+class CollectionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ['url', 'username', 'email', 'is_staff']
+        model = Collection
+        fields = ['name', 'description', 'tags_enabled']
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class CollectionViewSet(viewsets.ModelViewSet):
+    queryset = Collection.objects.all()
+    serializer_class = CollectionSerializer
 
 
 router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
+router.register(r'collections', CollectionViewSet)
 
 
 urlpatterns = [
