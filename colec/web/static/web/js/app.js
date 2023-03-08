@@ -48,8 +48,13 @@ $(document).on("click", "a", function(e) {
 });
 
 // Make modals closeable by clicking outside of them
-$(app.modalEl).on("click", function(e) {
+app.modalEl.addEventListener("click", function(e) {
     const modalContent = this.querySelector("article");
     if (modalContent.contains(e.target)) return;
     history.back();
+});
+
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape" && app.modalShown)
+        history.back();
 });
