@@ -5,25 +5,20 @@ $(document).on("click", "a", function(e) {
     Backbone.history.navigate(href, {trigger: true});
 });
 
-// Templates
-const signInModalTemplateText = $("#sign-in-modal-template").html();
-const signInModalTemplate = _.template(signInModalTemplateText);
-const landingPageTemplateText = $("#landing-page-template").html();
-const landingPageTemplate = _.template(landingPageTemplateText);
-
 // Primary router
+const templates = new Templates();
 let App = Backbone.Router.extend({
     routes: {
         "": "index",
         "signin": "signin",
     },
     index: function() {
-        const html = landingPageTemplate();
+        const html = templates.landingPage();
         $("#content").html(html);
     },
     signin: function() {
         this.index();
-        const html = signInModalTemplate();
+        const html = templates.signInModal();
         $("#modal").html(html);
         $("html").addClass("modal-is-open");
     },
