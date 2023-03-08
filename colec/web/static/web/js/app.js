@@ -1,3 +1,9 @@
+$(document).on("click", "a", function(e) {
+    e.preventDefault();
+    const href = $(this).attr("href");
+    Backbone.history.navigate(href, {trigger: true});
+});
+
 const signInModalTemplateText = $("#sign-in-modal-template").html();
 const signInModalTemplate = _.template(signInModalTemplateText);
 
@@ -13,7 +19,3 @@ let App = Backbone.Router.extend({
 });
 let app = new App();
 Backbone.history.start({pushState: true});
-
-$("#sign-in-button").on("click", function() {
-    app.navigate("signin", {trigger: true});
-});
