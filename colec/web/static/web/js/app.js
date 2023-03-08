@@ -5,24 +5,21 @@ $(document).on("click", "a", function(e) {
     Backbone.history.navigate(href, {trigger: true});
 });
 
-// Primary router
-let App = Backbone.Router.extend({
+const App = Backbone.Router.extend({
     routes: {
         "": "index",
         "signin": "signin",
     },
-    index: function() {
-        const html = Templates.landingPage();
-        $("#content").html(html);
+    index() {
+        document.getElementById("content").innerHTML = Templates.landingPage();
     },
-    signin: function() {
+    signin() {
         this.index();
-        const html = Templates.signInModal();
-        $("#modal").html(html);
-        $("html").addClass("modal-is-open");
+        document.getElementById("modal").innerHTML = Templates.signInModal();
+        document.documentElement.classList.add("modal-is-open");
     },
 });
-let app = new App();
 
 // Begin routing
+let app = new App();
 Backbone.history.start({pushState: true});
