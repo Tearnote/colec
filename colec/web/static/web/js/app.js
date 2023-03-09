@@ -1,3 +1,5 @@
+import {Templates} from "./templates.js";
+
 // Workaround for JetBrains bug
 // https://youtrack.jetbrains.com/issue/WEB-3552/
 window.Backbone = Backbone;
