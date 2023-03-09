@@ -84,6 +84,7 @@ const SignInModalView = Backbone.View.extend({
     attributes: { open: "" },
     events: {
         "click": "onClick", // Close if clicked outside the modal
+        "click #sign-in-button": "onSignIn",
     },
     html: `
         <article>
@@ -118,6 +119,24 @@ const SignInModalView = Backbone.View.extend({
         const modalContent = this.el.children[0];
         if (modalContent.contains(e.target)) return;
         this.close();
+    },
+    onSignIn(e) {
+        e.preventDefault();
+        const inputs = this.el.querySelector("#sign-in-form").elements;
+        const token = btoa(`${inputs.username.value}:${inputs.password.value}`);
+        console.log("start");
+        $.ajax("/auth/login/", {
+            method: "POST",
+            headers: {
+                Authorization: `Basic ${token}`,
+            },
+            success() {
+                console.log("Sign-in success");
+            },
+            error() {
+                console.log("Sign-in error");
+            }
+        });
     },
     onKeydown(key) {
         if (key === "Escape") this.close();
@@ -172,24 +191,3 @@ const AppRouter = Backbone.Router.extend({
 
 let appRouter = new AppRouter();
 Backbone.history.start({pushState: true});
-
-/*
-// Sign-in handler
-$(document).on("click", "#sign-in-button", function(e) {
-    e.preventDefault();
-    const inputs = document.getElementById("sign-in-form").elements;
-    const token = btoa(`${inputs.username.value}:${inputs.password.value}`);
-    $.ajax("/auth/login/", {
-        method: "POST",
-        headers: {
-            Authorization: `Basic ${token}`,
-        },
-        success: function() {
-            console.log("Sign-in success");
-        },
-        error: function() {
-            console.log("Sign-in error");
-        }
-    });
-});
-*/
