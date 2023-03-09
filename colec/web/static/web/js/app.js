@@ -98,6 +98,7 @@ const SignInModalView = Backbone.View.extend({
                     Password:
                     <input type="password" name="password">
                 </label>
+                <p id="sign-in-error-text"></p>
             </form>
             <footer>
                 <button id="sign-in-button" form="sign-in-form">Sign in</button>
@@ -125,7 +126,6 @@ const SignInModalView = Backbone.View.extend({
         e.target.setAttribute("aria-busy", "true");
         const inputs = this.el.querySelector("#sign-in-form").elements;
         const token = btoa(`${inputs.username.value}:${inputs.password.value}`);
-        console.log("start");
         $.ajax("/auth/login/", {
             method: "POST",
             headers: {
@@ -140,6 +140,8 @@ const SignInModalView = Backbone.View.extend({
     },
     onSignInFailure(e) {
         e.target.setAttribute("aria-busy", "false");
+        this.$("[name=password]").attr("aria-invalid", "true");
+        this.$("#sign-in-error-text").text("Invalid username or password.");
     },
     onKeydown(key) {
         if (key === "Escape") this.close();
