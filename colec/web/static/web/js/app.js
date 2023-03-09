@@ -2,6 +2,11 @@
 // https://youtrack.jetbrains.com/issue/WEB-3552/
 window.Backbone = Backbone;
 
+// Forward global key events as Backbone events
+document.addEventListener("keydown", function(e) {
+    Backbone.trigger("keydown", e.key);
+});
+
 const HeaderView = Backbone.View.extend({
     tagName: "header",
     className: "container-fluid",
@@ -98,6 +103,9 @@ const SignInModalView = Backbone.View.extend({
             </footer>
         </article>
     `,
+    initialize() {
+        this.listenTo(Backbone, "keydown", this.onKeydown);
+    },
     render() {
         this.el.innerHTML = this.html;
         return this;
@@ -110,6 +118,9 @@ const SignInModalView = Backbone.View.extend({
         const modalContent = this.el.children[0];
         if (modalContent.contains(e.target)) return;
         this.close();
+    },
+    onKeydown(key) {
+        if (key === "Escape") this.close();
     },
 });
 
