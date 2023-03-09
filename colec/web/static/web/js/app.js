@@ -100,7 +100,7 @@ const SignInModalView = Backbone.View.extend({
                 </label>
             </form>
             <footer>
-                <input id="sign-in-button" type="submit" form="sign-in" value="Sign in">
+                <button id="sign-in-button" form="sign-in-form">Sign in</button>
             </footer>
         </article>
     `,
@@ -122,6 +122,7 @@ const SignInModalView = Backbone.View.extend({
     },
     onSignIn(e) {
         e.preventDefault();
+        e.target.setAttribute("aria-busy", "true");
         const inputs = this.el.querySelector("#sign-in-form").elements;
         const token = btoa(`${inputs.username.value}:${inputs.password.value}`);
         console.log("start");
