@@ -131,13 +131,15 @@ const SignInModalView = Backbone.View.extend({
             headers: {
                 Authorization: `Basic ${token}`,
             },
-            success() {
-                console.log("Sign-in success");
-            },
-            error() {
-                console.log("Sign-in error");
-            }
+            success: this.onSignInSuccess.bind(this, e),
+            error: this.onSignInFailure.bind(this, e),
         });
+    },
+    onSignInSuccess(e) {
+        this.close();
+    },
+    onSignInFailure(e) {
+        e.target.setAttribute("aria-busy", "false");
     },
     onKeydown(key) {
         if (key === "Escape") this.close();
