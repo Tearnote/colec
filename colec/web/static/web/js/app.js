@@ -1,3 +1,7 @@
+// Workaround for JetBrains bug
+// https://youtrack.jetbrains.com/issue/WEB-3552/
+window.Backbone = Backbone;
+
 const App = Backbone.Router.extend({
     contentEl: document.getElementById("content"),
     modalEl: document.getElementById("modal"),
