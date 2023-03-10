@@ -1,4 +1,5 @@
 export const auth = {
+    currentUser: null,
     SignInResult: function(success, details) {
         this.success = success;
         this.details = details;
@@ -13,16 +14,22 @@ export const auth = {
             },
         });
         const json = await response.json();
-        return new this.SignInResult(
+        const result = new this.SignInResult(
             response.ok,
             json.detail,
         );
+        if (result.success) {
+            this.currentUser = json;
+            this.trigger("signin", this.currentUser);
+        }
+        return result;
     },
     async fetchCurrentUser() {
         const response = await fetch("/auth/me/", { credentials: "include" });
         return await response.json();
     }
 };
+_.extend(auth, Backbone.Events);
 
 export const SignInModalView = Backbone.View.extend({
     tagName: "dialog",
