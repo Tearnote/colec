@@ -1,4 +1,4 @@
-import {SignInModalView} from "./auth.js";
+import {auth, SignInModalView} from "./auth.js";
 
 // Workaround for JetBrains bug
 // https://youtrack.jetbrains.com/issue/WEB-3552/
@@ -12,21 +12,28 @@ document.addEventListener("keydown", function(e) {
 const HeaderView = Backbone.View.extend({
     tagName: "header",
     className: "container-fluid",
+    currentUserTextEl: null,
     html: `
         <nav>
             <a href="/"><h1>Colec</h1></a>
             <ul>
+                <li id="current-user-text"></li>
                 <li><a role="button" class="outline" href="/signin">Sign in</a></li>
             </ul>
         </nav>
     `,
     initialize() {
         this.render();
+        this.listenTo(auth, "signin", this.onSignIn);
     },
     render() {
         this.el.innerHTML = this.html;
+        this.currentUserTextEl = this.el.querySelector("#current-user-text");
         return this;
     },
+    onSignIn(user) {
+        this.currentUserTextEl.textContent = `You are signed in as ${user.username}`;
+    }
 });
 
 const FooterView = Backbone.View.extend({
