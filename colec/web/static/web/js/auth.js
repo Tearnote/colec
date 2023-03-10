@@ -5,21 +5,22 @@ export const auth = {
     },
     async login(username, password) {
         const token = btoa(`${username}:${password}`);
-        return fetch("/auth/login/", {
+        const response = await fetch("/auth/login/", {
             method: "POST",
             credentials: "include",
             headers: {
                 Authorization: `Basic ${token}`,
             },
-        }).then(response => response.json().then(data => new this.SignInResult(
+        });
+        const json = await response.json();
+        return new this.SignInResult(
             response.ok,
-            data.detail,
-        )));
+            json.detail,
+        );
     },
-    async me() {
-        fetch("/auth/me/", { credentials: "include" })
-            .then(response => response.json())
-            .then(json => console.log(json));
+    async fetchCurrentUser() {
+        const response = await fetch("/auth/me/", { credentials: "include" });
+        return await response.json();
     }
 };
 
@@ -73,17 +74,19 @@ export const SignInModalView = Backbone.View.extend({
     onClick(e) {
         if (!this.content.contains(e.target)) this.close();
     },
-    onSubmit(e) {
+    async onSubmit(e) {
         e.preventDefault();
         this.submitButton.setAttribute("aria-busy", "true");
         const inputs = this.form.elements;
-        auth.login(inputs.username.value, inputs.password.value)
-            .then(result => {
-                if (!result.success)
-                    throw new Error(result.details);
+        try {
+            const result = await auth.login(inputs.username.value, inputs.password.value);
+            if (result.success)
                 this.close();
-            })
-            .catch(error => this.setError(error));
+            else
+                throw new Error(result.details);
+        } catch(error) {
+            this.setError(error);
+        }
     },
     onKeydown(key) {
         if (key === "Escape") this.close();
