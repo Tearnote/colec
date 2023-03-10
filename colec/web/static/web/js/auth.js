@@ -7,7 +7,10 @@ export const auth = {
             headers: {
                 Authorization: `Basic ${token}`,
             },
-        });
+        }).then(response => response.json().then(data => ({
+            ok: response.ok,
+            body: data.detail,
+        })));
     },
 };
 
@@ -66,10 +69,6 @@ export const SignInModalView = Backbone.View.extend({
         this.submitButton.setAttribute("aria-busy", "true");
         const inputs = this.form.elements;
         auth.login(inputs.username.value, inputs.password.value)
-            .then(response => response.json().then(data => ({
-                ok: response.ok,
-                body: data.detail,
-            })))
             .then(response => {
                 if (!response.ok)
                     throw new Error(response.body);
