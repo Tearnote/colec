@@ -157,3 +157,4 @@ const AppRouter = Backbone.Router.extend({
 
 let appRouter = new AppRouter();
 Backbone.history.start({pushState: true});
+auth.fetchCurrentUser();

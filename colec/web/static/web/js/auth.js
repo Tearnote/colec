@@ -26,7 +26,12 @@ export const auth = {
     },
     async fetchCurrentUser() {
         const response = await fetch("/auth/me/", { credentials: "include" });
-        return await response.json();
+        const user = await response.json();
+        if (!this.currentUser || this.currentUser.id !== user.id) {
+            this.currentUser = user;
+            this.trigger("userchange", this.currentUser);
+        }
+        return user;
     }
 };
 _.extend(auth, Backbone.Events);
