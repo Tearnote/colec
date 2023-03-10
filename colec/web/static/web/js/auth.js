@@ -34,9 +34,13 @@ export const auth = {
         return result;
     },
     async logout() {
+        const csrfToken = Cookies.get("csrftoken");
         const response = await fetch("/auth/logout/", {
             method: "POST",
             credentials: "include",
+            headers: {
+                "X-CSRFToken": csrfToken,
+            },
         });
         const json = await response.json();
         const result = new this.AuthResult(
