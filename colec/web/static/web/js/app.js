@@ -84,7 +84,7 @@ const SignInModalView = Backbone.View.extend({
     attributes: { open: "" },
     events: {
         "click": "onClick", // Close if clicked outside the modal
-        "click #sign-in-button": "onSignIn",
+        "submit": "onSignIn",
     },
     html: `
         <article>
@@ -123,7 +123,7 @@ const SignInModalView = Backbone.View.extend({
     },
     onSignIn(e) {
         e.preventDefault();
-        e.target.setAttribute("aria-busy", "true");
+        this.$("#sign-in-button").attr("aria-busy", "true");
         const inputs = this.el.querySelector("#sign-in-form").elements;
         const token = btoa(`${inputs.username.value}:${inputs.password.value}`);
         $.ajax("/auth/login/", {
@@ -139,7 +139,7 @@ const SignInModalView = Backbone.View.extend({
         this.close();
     },
     onSignInFailure(e) {
-        e.target.setAttribute("aria-busy", "false");
+        this.$("#sign-in-button").attr("aria-busy", "false");
         this.$("[name=password]").attr("aria-invalid", "true");
         this.$("#sign-in-error-text").text("Invalid username or password.");
     },
