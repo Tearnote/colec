@@ -7,6 +7,19 @@ document.addEventListener("keydown", function(e) {
     Backbone.trigger("keydown", e.key);
 });
 
+const auth = {
+    async login(username, password) {
+        const token = btoa(`${username}:${password}`);
+        return fetch("/auth/login/", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                Authorization: `Basic ${token}`,
+            },
+        });
+    },
+};
+
 const HeaderView = Backbone.View.extend({
     tagName: "header",
     className: "container-fluid",
@@ -93,7 +106,7 @@ const SignInModalView = Backbone.View.extend({
     attributes: { open: "" },
     events: {
         "click": "onClick", // Close if clicked outside the modal
-        "submit": "onSignIn",
+        "submit": "onSubmit",
     },
     html: `
         <article>
@@ -138,30 +151,29 @@ const SignInModalView = Backbone.View.extend({
     onClick(e) {
         if (!this.content.contains(e.target)) this.close();
     },
-    onSignIn(e) {
+    onSubmit(e) {
         e.preventDefault();
         this.submitButton.setAttribute("aria-busy", "true");
         const inputs = this.form.elements;
-        const token = btoa(`${inputs.username.value}:${inputs.password.value}`);
-        $.ajax("/auth/login/", {
-            method: "POST",
-            headers: {
-                Authorization: `Basic ${token}`,
-            },
-            success: this.onSignInSuccess.bind(this, e),
-            error: this.onSignInFailure.bind(this, e),
-        });
-    },
-    onSignInSuccess(e) {
-        this.close();
-    },
-    onSignInFailure(e) {
-        this.submitButton.setAttribute("aria-busy", "false");
-        this.errorText.textContent = "Invalid username or password.";
+        auth.login(inputs.username.value, inputs.password.value)
+            .then(response => response.json().then(data => ({
+                ok: response.ok,
+                body: data.detail,
+            })))
+            .then(response => {
+                if (!response.ok)
+                    throw new Error(response.body);
+                this.close();
+            })
+            .catch(error => this.setError(error));
     },
     onKeydown(key) {
         if (key === "Escape") this.close();
     },
+    setError(str) {
+        this.submitButton.setAttribute("aria-busy", "false");
+        this.errorText.textContent = str;
+    }
 });
 
 const IndexView = Backbone.View.extend({
