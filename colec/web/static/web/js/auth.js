@@ -1,8 +1,17 @@
 export const auth = {
     currentUser: null,
-    SignInResult: function(success, details) {
+    AuthResult: function(success, details) {
         this.success = success;
         this.details = details;
+    },
+    async fetchCurrentUser() {
+        const response = await fetch("/auth/me/", { credentials: "include" });
+        const user = await response.json();
+        if (!this.currentUser || this.currentUser.id !== user.id) {
+            this.currentUser = user;
+            this.trigger("userchange", this.currentUser);
+        }
+        return user;
     },
     async login(username, password) {
         const token = btoa(`${username}:${password}`);
@@ -14,7 +23,7 @@ export const auth = {
             },
         });
         const json = await response.json();
-        const result = new this.SignInResult(
+        const result = new this.AuthResult(
             response.ok,
             json.detail,
         );
@@ -24,14 +33,21 @@ export const auth = {
         }
         return result;
     },
-    async fetchCurrentUser() {
-        const response = await fetch("/auth/me/", { credentials: "include" });
-        const user = await response.json();
-        if (!this.currentUser || this.currentUser.id !== user.id) {
-            this.currentUser = user;
+    async logout() {
+        const response = await fetch("/auth/logout/", {
+            method: "POST",
+            credentials: "include",
+        });
+        const json = await response.json();
+        const result = new this.AuthResult(
+            response.ok,
+            json.detail,
+        );
+        if (result.success) {
+            this.currentUser = null;
             this.trigger("userchange", this.currentUser);
         }
-        return user;
+        return result;
     }
 };
 _.extend(auth, Backbone.Events);

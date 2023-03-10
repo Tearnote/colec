@@ -12,6 +12,9 @@ document.addEventListener("keydown", function(e) {
 const HeaderView = Backbone.View.extend({
     tagName: "header",
     className: "container-fluid",
+    events: {
+        "click #sign-out-button": "onSignOut",
+    },
     template: _.template(`
         <nav>
             <a href="/"><h1>Colec</h1></a>
@@ -25,7 +28,7 @@ const HeaderView = Backbone.View.extend({
         <a role="button" class="outline" href="/signin">Sign in</a>
     `,
     signOutButtonHtml: `
-        <a role="button" class="outline" href="/signout">Sign out</a>
+        <a id="sign-out-button" role="button" class="outline" href="#">Sign out</a>
     `,
     initialize() {
         this.render();
@@ -47,7 +50,10 @@ const HeaderView = Backbone.View.extend({
     },
     onUserChange(user) {
         this.render(user);
-    }
+    },
+    onSignOut() {
+        auth.logout();
+    },
 });
 
 const FooterView = Backbone.View.extend({
