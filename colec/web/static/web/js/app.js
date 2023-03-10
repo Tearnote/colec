@@ -92,11 +92,11 @@ const SignInModalView = Backbone.View.extend({
             <form id="sign-in-form">
                 <label>
                     Username:
-                    <input type="text" name="username">
+                    <input type="text" name="username" required>
                 </label>
                 <label>
                     Password:
-                    <input type="password" name="password">
+                    <input type="password" name="password" required>
                 </label>
                 <p id="sign-in-error-text"></p>
             </form>
