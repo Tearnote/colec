@@ -18,6 +18,9 @@ const HeaderView = Backbone.View.extend({
             </ul>
         </nav>
     `,
+    initialize() {
+        this.render();
+    },
     render() {
         this.el.innerHTML = this.html;
         return this;
@@ -30,6 +33,9 @@ const FooterView = Backbone.View.extend({
     html: `
         <p>Colec, Copyright 2023</p>
     `,
+    initialize() {
+        this.render();
+    },
     render() {
         this.el.innerHTML = this.html;
         return this;
@@ -73,6 +79,9 @@ const LandingView = Backbone.View.extend({
             </article>
         </section>
     `,
+    initialize() {
+        this.render();
+    },
     render() {
         this.el.innerHTML = this.html;
         return this;
@@ -106,6 +115,7 @@ const SignInModalView = Backbone.View.extend({
         </article>
     `,
     initialize() {
+        this.render();
         this.listenTo(Backbone, "keydown", this.onKeydown);
     },
     render() {
@@ -156,10 +166,10 @@ const IndexView = Backbone.View.extend({
     events: {
         "click a": "onAnchorClick", // Prevent links from reloading the page
     },
+    initialize() {
+        this.render();
+    },
     render() {
-        this.header.render();
-        this.footer.render();
-        this.content.render();
         this.el.append(
             this.header.el,
             this.content.el,
@@ -182,14 +192,12 @@ const AppRouter = Backbone.Router.extend({
     },
     index() {
         const indexView = new IndexView();
-        indexView.render();
         document.body.replaceWith(indexView.el);
         this.contentView = indexView;
     },
     signin() {
         if (!this.contentView) this.index();
         const signInModalView = new SignInModalView();
-        signInModalView.render();
         this.contentView.el.append(signInModalView.el);
     },
 });
