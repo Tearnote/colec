@@ -1,4 +1,8 @@
 export const auth = {
+    SignInResult: function(success, details) {
+        this.success = success;
+        this.details = details;
+    },
     async login(username, password) {
         const token = btoa(`${username}:${password}`);
         return fetch("/auth/login/", {
@@ -7,11 +11,16 @@ export const auth = {
             headers: {
                 Authorization: `Basic ${token}`,
             },
-        }).then(response => response.json().then(data => ({
-            ok: response.ok,
-            body: data.detail,
-        })));
+        }).then(response => response.json().then(data => new this.SignInResult(
+            response.ok,
+            data.detail,
+        )));
     },
+    async me() {
+        fetch("/auth/me/", { credentials: "include" })
+            .then(response => response.json())
+            .then(json => console.log(json));
+    }
 };
 
 export const SignInModalView = Backbone.View.extend({
@@ -69,9 +78,9 @@ export const SignInModalView = Backbone.View.extend({
         this.submitButton.setAttribute("aria-busy", "true");
         const inputs = this.form.elements;
         auth.login(inputs.username.value, inputs.password.value)
-            .then(response => {
-                if (!response.ok)
-                    throw new Error(response.body);
+            .then(result => {
+                if (!result.success)
+                    throw new Error(result.details);
                 this.close();
             })
             .catch(error => this.setError(error));
