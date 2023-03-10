@@ -110,15 +110,11 @@ export const SignInModalView = Backbone.View.extend({
         e.preventDefault();
         this.submitButton.setAttribute("aria-busy", "true");
         const inputs = this.form.elements;
-        try {
-            const result = await auth.login(inputs.username.value, inputs.password.value);
-            if (result.success)
-                this.close();
-            else
-                throw new Error(result.details);
-        } catch(error) {
-            this.setError(error);
-        }
+        const result = await auth.login(inputs.username.value, inputs.password.value);
+        if (result.success)
+            this.close();
+        else
+            this.setError(result.details);
     },
     onKeydown: function(key) {
         if (key === "Escape") this.close();
