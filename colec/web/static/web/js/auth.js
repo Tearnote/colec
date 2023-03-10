@@ -14,8 +14,10 @@ export const auth = {
     // returns the user object
     fetchCurrentUser: async function() {
         const response = await fetch("/auth/me/", { credentials: "include" });
-        const user = await response.json();
-        if (!this.currentUser || this.currentUser.id !== user.id) {
+        const user = response.ok?
+            await response.json() :
+            null;
+        if (this.currentUser?.id !== user?.id) {
             this.currentUser = user;
             this.trigger("userchange", this.currentUser);
         }
