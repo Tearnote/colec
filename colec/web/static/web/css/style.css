@@ -1,3 +1,5 @@
+/* region Landing page */
+
 #eyecatch {
     text-align: center;
 }
@@ -22,6 +24,12 @@
     content: "books.";
 }
 
+/* endregion */
+
+/* region Header */
+
 #sign-in-error-text {
     color: var(--del-color);
 }
+
+/* endregion */
