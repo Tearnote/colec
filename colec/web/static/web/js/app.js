@@ -52,6 +52,7 @@ const HeaderView = Backbone.View.extend({
         this.render(user);
     },
     onSignOut: function() {
+        this.el.querySelector("#sign-out-button").setAttribute("aria-busy", "true");
         auth.logout();
     },
 });
