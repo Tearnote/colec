@@ -141,14 +141,14 @@ const AppRouter = Backbone.Router.extend({
     contentView: null,
     routes: {
         "": "index",
-        "signin": "signin",
+        "signin": "signIn",
     },
     index() {
         const indexView = new IndexView();
         document.body.replaceWith(indexView.el);
         this.contentView = indexView;
     },
-    signin() {
+    signIn() {
         if (!this.contentView) this.index();
         const signInModalView = new SignInModalView();
         this.contentView.el.append(signInModalView.el);
