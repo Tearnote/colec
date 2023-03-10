@@ -114,12 +114,21 @@ const SignInModalView = Backbone.View.extend({
             </footer>
         </article>
     `,
+    // Cached DOM nodes
+    content: null, // The actual modal, without the shroud
+    form: null,
+    submitButton: null,
+    errorText: null,
     initialize() {
         this.render();
         this.listenTo(Backbone, "keydown", this.onKeydown);
     },
     render() {
         this.el.innerHTML = this.html;
+        this.content = this.el.children[0];
+        this.form = this.el.querySelector("#sign-in-form");
+        this.submitButton = this.el.querySelector("#sign-in-button");
+        this.errorText = this.el.querySelector("#sign-in-error-text");
         return this;
     },
     close() {
@@ -127,14 +136,12 @@ const SignInModalView = Backbone.View.extend({
         history.back();
     },
     onClick(e) {
-        const modalContent = this.el.children[0];
-        if (modalContent.contains(e.target)) return;
-        this.close();
+        if (!this.content.contains(e.target)) this.close();
     },
     onSignIn(e) {
         e.preventDefault();
-        this.$("#sign-in-button").attr("aria-busy", "true");
-        const inputs = this.el.querySelector("#sign-in-form").elements;
+        this.submitButton.setAttribute("aria-busy", "true");
+        const inputs = this.form.elements;
         const token = btoa(`${inputs.username.value}:${inputs.password.value}`);
         $.ajax("/auth/login/", {
             method: "POST",
@@ -149,9 +156,8 @@ const SignInModalView = Backbone.View.extend({
         this.close();
     },
     onSignInFailure(e) {
-        this.$("#sign-in-button").attr("aria-busy", "false");
-        this.$("[name=password]").attr("aria-invalid", "true");
-        this.$("#sign-in-error-text").text("Invalid username or password.");
+        this.submitButton.setAttribute("aria-busy", "false");
+        this.errorText.textContent = "Invalid username or password.";
     },
     onKeydown(key) {
         if (key === "Escape") this.close();
