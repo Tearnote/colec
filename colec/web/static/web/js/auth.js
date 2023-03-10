@@ -82,21 +82,20 @@ export const SignInModalView = Backbone.View.extend({
             </footer>
         </article>
     `,
-    // Cached DOM nodes
-    content: null, // The actual modal, without the shroud
-    form: null,
-    submitButton: null,
-    errorText: null,
+    contentEl: null, // The actual modal, without the shroud
+    formEl: null,
+    submitButtonEl: null,
+    errorTextEl: null,
     initialize: function() {
         this.render();
         this.listenTo(Backbone, "keydown", this.onKeydown);
     },
     render: function() {
         this.el.innerHTML = this.html;
-        this.content = this.el.children[0];
-        this.form = this.el.querySelector("#sign-in-form");
-        this.submitButton = this.el.querySelector("#sign-in-button");
-        this.errorText = this.el.querySelector("#sign-in-error-text");
+        this.contentEl = this.el.children[0];
+        this.formEl = this.el.querySelector("#sign-in-form");
+        this.submitButtonEl = this.el.querySelector("#sign-in-button");
+        this.errorTextEl = this.el.querySelector("#sign-in-error-text");
         return this;
     },
     close: function() {
@@ -104,12 +103,12 @@ export const SignInModalView = Backbone.View.extend({
         history.back();
     },
     onClick: function(e) {
-        if (!this.content.contains(e.target)) this.close();
+        if (!this.contentEl.contains(e.target)) this.close();
     },
     onSubmit: async function(e) {
         e.preventDefault();
-        this.submitButton.setAttribute("aria-busy", "true");
-        const inputs = this.form.elements;
+        this.submitButtonEl.setAttribute("aria-busy", "true");
+        const inputs = this.formEl.elements;
         const result = await auth.login(inputs.username.value, inputs.password.value);
         if (result.success)
             this.close();
@@ -120,7 +119,7 @@ export const SignInModalView = Backbone.View.extend({
         if (key === "Escape") this.close();
     },
     setError: function(str) {
-        this.submitButton.setAttribute("aria-busy", "false");
-        this.errorText.textContent = str;
+        this.submitButtonEl.setAttribute("aria-busy", "false");
+        this.errorTextEl.textContent = str;
     }
 });
