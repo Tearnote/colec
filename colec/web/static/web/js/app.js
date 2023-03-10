@@ -9,12 +9,16 @@ document.addEventListener("keydown", function(e) {
     Backbone.trigger("keydown", e.key);
 });
 
+// Site header component
+// Updates itself in response to user changes
 const HeaderView = Backbone.View.extend({
+
     tagName: "header",
     className: "container-fluid",
     events: {
         "click #sign-out-button": "onSignOut",
     },
+
     template: _.template(`
         <nav>
             <a href="/"><h1>Colec</h1></a>
@@ -30,10 +34,14 @@ const HeaderView = Backbone.View.extend({
     signOutButtonHtml: `
         <a id="sign-out-button" role="button" class="outline" href="#">Sign out</a>
     `,
+
     initialize: function() {
         this.render();
         this.listenTo(auth, "userchange", this.onUserChange);
     },
+
+    // Renders user details if user argument is provided
+    // If user is not provided, offer sign-in
     render: function(user) {
         if (!user) {
             this.el.innerHTML = this.template({
@@ -48,33 +56,45 @@ const HeaderView = Backbone.View.extend({
         }
         return this;
     },
+
     onUserChange: function(user) {
         this.render(user);
     },
+
     onSignOut: function() {
         this.el.querySelector("#sign-out-button").setAttribute("aria-busy", "true");
-        auth.logout();
+        auth.logout(); // We don't need the promise - header will be updated via event
     },
+
 });
 
+// Site footer component
 const FooterView = Backbone.View.extend({
+
     tagName: "footer",
     className: "container-fluid",
+
     html: `
         <p>Colec, Copyright 2023</p>
     `,
+
     initialize: function() {
         this.render();
     },
+
     render: function() {
         this.el.innerHTML = this.html;
         return this;
     },
+
 });
 
+// Static landing page content component
 const LandingView = Backbone.View.extend({
+
     tagName: "main",
     className: "container-fluid",
+
     html: `
         <section id="eyecatch">
             <h2>Track your <span id="everything">everything.</span></h2>
@@ -109,26 +129,33 @@ const LandingView = Backbone.View.extend({
             </article>
         </section>
     `,
+
     initialize: function() {
         this.render();
     },
+
     render: function() {
         this.el.innerHTML = this.html;
         return this;
     },
+
 });
 
+// Structural component of the site's index (root) page
 const IndexView = Backbone.View.extend({
+
     tagName: "body",
     header: new HeaderView(),
     footer: new FooterView(),
     content: new LandingView(),
     events: {
-        "click a": "onAnchorClick", // Prevent links from reloading the page
+        "click a": "onAnchorClick",
     },
+
     initialize: function() {
         this.render();
     },
+
     render: function() {
         this.el.append(
             this.header.el,
@@ -137,31 +164,46 @@ const IndexView = Backbone.View.extend({
         );
         return this;
     },
+
+    // Prevent links to other URLs from reloading the page
     onAnchorClick: function(e) {
         e.preventDefault();
         const href = e.target.getAttribute("href");
         Backbone.history.navigate(href, {trigger: true});
     },
+
 });
 
+// Primary URL router, controls which components are shown
 const AppRouter = Backbone.Router.extend({
+
     contentView: null,
+
     routes: {
         "": "index",
         "signin": "signIn",
     },
+
+    // Show the landing page
     index: function() {
         const indexView = new IndexView();
         document.body.replaceWith(indexView.el);
         this.contentView = indexView;
     },
+
+    // Show the sign-in modal
+    // If navigated to directly, the modal will have the landing page below
     signIn: function() {
         if (!this.contentView) this.index();
         const signInModalView = new SignInModalView();
         this.contentView.el.append(signInModalView.el);
     },
+
 });
 
+// Initialize the app by dispatching the current route
 let appRouter = new AppRouter();
 Backbone.history.start({pushState: true});
+
+// Retrieve signed-in user if still active from another session
 auth.fetchCurrentUser();
