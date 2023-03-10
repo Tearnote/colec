@@ -12,27 +12,41 @@ document.addEventListener("keydown", function(e) {
 const HeaderView = Backbone.View.extend({
     tagName: "header",
     className: "container-fluid",
-    currentUserTextEl: null,
-    html: `
+    template: _.template(`
         <nav>
             <a href="/"><h1>Colec</h1></a>
             <ul>
-                <li id="current-user-text"></li>
-                <li><a role="button" class="outline" href="/signin">Sign in</a></li>
+                <li><%= userText %></li>
+                <li><%= userButton %></li>
             </ul>
         </nav>
+    `),
+    signInButtonHtml: `
+        <a role="button" class="outline" href="/signin">Sign in</a>
+    `,
+    signOutButtonHtml: `
+        <a role="button" class="outline" href="/signout">Sign out</a>
     `,
     initialize() {
         this.render();
-        this.listenTo(auth, "signin", this.onSignIn);
+        this.listenTo(auth, "userchange", this.onUserChange);
     },
-    render() {
-        this.el.innerHTML = this.html;
-        this.currentUserTextEl = this.el.querySelector("#current-user-text");
+    render(user) {
+        if (!user) {
+            this.el.innerHTML = this.template({
+                userText: "",
+                userButton: this.signInButtonHtml,
+            });
+        } else {
+            this.el.innerHTML = this.template({
+                userText: `You are signed in as ${user.username}`,
+                userButton: this.signOutButtonHtml,
+            });
+        }
         return this;
     },
-    onSignIn(user) {
-        this.currentUserTextEl.textContent = `You are signed in as ${user.username}`;
+    onUserChange(user) {
+        this.render(user);
     }
 });
 

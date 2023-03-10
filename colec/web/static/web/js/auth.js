@@ -20,7 +20,7 @@ export const auth = {
         );
         if (result.success) {
             this.currentUser = json;
-            this.trigger("signin", this.currentUser);
+            this.trigger("userchange", this.currentUser);
         }
         return result;
     },
