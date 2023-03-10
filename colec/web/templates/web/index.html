@@ -3,18 +3,22 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <!-- Metadata -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Colec. Track your everything</title>
 
+    <!-- Vendor styles -->
     {% if debug %}
         <link rel="stylesheet" href="{% static 'css/pico.css' %}">
     {% else %}
         <link rel="stylesheet" href="{% static 'css/pico.min.css' %}">
     {% endif %}
+    <!-- Custom styles -->
     <link rel="stylesheet" href="{% static 'web/css/style.css' %}">
 
+    <!-- Vendor scripts -->
     {% if debug %}
         <script src="{% static 'js/jquery-3.6.3.js' %}" defer></script>
         <script src="{% static 'js/underscore.js' %}" defer></script>
@@ -24,8 +28,12 @@
         <script src="{% static 'js/underscore.min.js' %}" defer></script>
         <script src="{% static 'js/backbone.min.js' %}" defer></script>
     {% endif %}
+    <!-- Custom scripts -->
     <script type="module" src="{% static 'web/js/app.js' %}"></script>
 </head>
+
 <body>
+<!-- Generated dynamically -->
 </body>
+
 </html>
