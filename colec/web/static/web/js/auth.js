@@ -4,7 +4,7 @@ export const auth = {
         this.success = success;
         this.details = details;
     },
-    async fetchCurrentUser() {
+    fetchCurrentUser: async function() {
         const response = await fetch("/auth/me/", { credentials: "include" });
         const user = await response.json();
         if (!this.currentUser || this.currentUser.id !== user.id) {
@@ -13,7 +13,7 @@ export const auth = {
         }
         return user;
     },
-    async login(username, password) {
+    login: async function(username, password) {
         const token = btoa(`${username}:${password}`);
         const response = await fetch("/auth/login/", {
             method: "POST",
@@ -33,7 +33,7 @@ export const auth = {
         }
         return result;
     },
-    async logout() {
+    logout: async function() {
         const csrfToken = Cookies.get("csrftoken");
         const response = await fetch("/auth/logout/", {
             method: "POST",
@@ -87,11 +87,11 @@ export const SignInModalView = Backbone.View.extend({
     form: null,
     submitButton: null,
     errorText: null,
-    initialize() {
+    initialize: function() {
         this.render();
         this.listenTo(Backbone, "keydown", this.onKeydown);
     },
-    render() {
+    render: function() {
         this.el.innerHTML = this.html;
         this.content = this.el.children[0];
         this.form = this.el.querySelector("#sign-in-form");
@@ -99,14 +99,14 @@ export const SignInModalView = Backbone.View.extend({
         this.errorText = this.el.querySelector("#sign-in-error-text");
         return this;
     },
-    close() {
+    close: function() {
         this.remove();
         history.back();
     },
-    onClick(e) {
+    onClick: function(e) {
         if (!this.content.contains(e.target)) this.close();
     },
-    async onSubmit(e) {
+    onSubmit: async function(e) {
         e.preventDefault();
         this.submitButton.setAttribute("aria-busy", "true");
         const inputs = this.form.elements;
@@ -120,10 +120,10 @@ export const SignInModalView = Backbone.View.extend({
             this.setError(error);
         }
     },
-    onKeydown(key) {
+    onKeydown: function(key) {
         if (key === "Escape") this.close();
     },
-    setError(str) {
+    setError: function(str) {
         this.submitButton.setAttribute("aria-busy", "false");
         this.errorText.textContent = str;
     }

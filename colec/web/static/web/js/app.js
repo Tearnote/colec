@@ -30,11 +30,11 @@ const HeaderView = Backbone.View.extend({
     signOutButtonHtml: `
         <a id="sign-out-button" role="button" class="outline" href="#">Sign out</a>
     `,
-    initialize() {
+    initialize: function() {
         this.render();
         this.listenTo(auth, "userchange", this.onUserChange);
     },
-    render(user) {
+    render: function(user) {
         if (!user) {
             this.el.innerHTML = this.template({
                 userText: "",
@@ -48,10 +48,10 @@ const HeaderView = Backbone.View.extend({
         }
         return this;
     },
-    onUserChange(user) {
+    onUserChange: function(user) {
         this.render(user);
     },
-    onSignOut() {
+    onSignOut: function() {
         auth.logout();
     },
 });
@@ -62,10 +62,10 @@ const FooterView = Backbone.View.extend({
     html: `
         <p>Colec, Copyright 2023</p>
     `,
-    initialize() {
+    initialize: function() {
         this.render();
     },
-    render() {
+    render: function() {
         this.el.innerHTML = this.html;
         return this;
     },
@@ -108,10 +108,10 @@ const LandingView = Backbone.View.extend({
             </article>
         </section>
     `,
-    initialize() {
+    initialize: function() {
         this.render();
     },
-    render() {
+    render: function() {
         this.el.innerHTML = this.html;
         return this;
     },
@@ -125,10 +125,10 @@ const IndexView = Backbone.View.extend({
     events: {
         "click a": "onAnchorClick", // Prevent links from reloading the page
     },
-    initialize() {
+    initialize: function() {
         this.render();
     },
-    render() {
+    render: function() {
         this.el.append(
             this.header.el,
             this.content.el,
@@ -136,7 +136,7 @@ const IndexView = Backbone.View.extend({
         );
         return this;
     },
-    onAnchorClick(e) {
+    onAnchorClick: function(e) {
         e.preventDefault();
         const href = e.target.getAttribute("href");
         Backbone.history.navigate(href, {trigger: true});
@@ -149,12 +149,12 @@ const AppRouter = Backbone.Router.extend({
         "": "index",
         "signin": "signIn",
     },
-    index() {
+    index: function() {
         const indexView = new IndexView();
         document.body.replaceWith(indexView.el);
         this.contentView = indexView;
     },
-    signIn() {
+    signIn: function() {
         if (!this.contentView) this.index();
         const signInModalView = new SignInModalView();
         this.contentView.el.append(signInModalView.el);
