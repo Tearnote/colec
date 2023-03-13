@@ -166,27 +166,38 @@ const IndexView = Backbone.View.extend({
 // Primary URL router, controls which components are shown
 const AppRouter = Backbone.Router.extend({
 
-    contentView: null,
-
     routes: {
         "": "index",
         "signin": "signIn",
     },
 
+    mainView: null,
+    mainViewName: null,
+
+    mainViews: {
+        "index": IndexView,
+    },
+
     // Show the landing page
     index: function() {
-        const indexView = new IndexView();
-        document.body.replaceWith(indexView.el);
-        this.contentView = indexView;
+        this.useMainView("index");
     },
 
     // Show the sign-in modal
     // If navigated to directly, the modal will have the landing page below
     signIn: function() {
-        if (!this.contentView) this.index();
+        this.useMainView("index");
         const signInModalView = new SignInModalView();
-        this.contentView.el.append(signInModalView.el);
+        this.mainView.el.append(signInModalView.el);
         signInModalView.on("close", function() { history.back(); });
+    },
+
+    // Ensure that the expected base view is loaded
+    useMainView: function(viewName) {
+        if (viewName === this.mainViewName) return;
+        this.mainView = new this.mainViews[viewName]();
+        this.mainViewName = viewName;
+        document.body.replaceWith(this.mainView.el);
     },
 
 });
