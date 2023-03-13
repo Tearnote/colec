@@ -270,6 +270,7 @@ const AppRouter = Backbone.Router.extend({
 $("html").on("click", "a", function(e) {
     e.preventDefault();
     const href = e.target.getAttribute("href");
+    if (href === "#") return;
     Backbone.history.navigate(href, {trigger: true});
 });
 
