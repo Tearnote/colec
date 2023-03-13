@@ -147,9 +147,6 @@ const IndexView = Backbone.View.extend({
     header: new HeaderView(),
     footer: new FooterView(),
     content: new LandingView(),
-    events: {
-        "click a": "onAnchorClick",
-    },
 
     initialize: function() {
         this.render();
@@ -162,13 +159,6 @@ const IndexView = Backbone.View.extend({
             this.footer.el,
         );
         return this;
-    },
-
-    // Prevent links to other URLs from reloading the page
-    onAnchorClick: function(e) {
-        e.preventDefault();
-        const href = e.target.getAttribute("href");
-        Backbone.history.navigate(href, {trigger: true});
     },
 
 });
@@ -199,6 +189,13 @@ const AppRouter = Backbone.Router.extend({
         signInModalView.on("close", function() { history.back(); });
     },
 
+});
+
+// Prevent links to other URLs from reloading the page
+$("html").on("click", "a", function(e) {
+    e.preventDefault();
+    const href = e.target.getAttribute("href");
+    Backbone.history.navigate(href, {trigger: true});
 });
 
 // Retrieve signed-in user if still active from another session
