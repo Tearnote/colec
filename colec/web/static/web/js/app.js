@@ -40,25 +40,24 @@ const HeaderView = Backbone.View.extend({
         this.listenTo(auth, "userchange", this.onUserChange);
     },
 
-    // Renders user details if user argument is provided
-    // If user is not provided, offer sign-in
-    render: function(user) {
-        if (!user) {
+    // Render the header, with user details if logged in
+    render: function() {
+        if (!auth.currentUser) {
             this.el.innerHTML = this.template({
                 userText: "",
                 userButton: this.signInButtonHtml,
             });
         } else {
             this.el.innerHTML = this.template({
-                userText: `You are signed in as ${user.username}`,
+                userText: `You are signed in as ${auth.currentUser.username}`,
                 userButton: this.signOutButtonHtml,
             });
         }
         return this;
     },
 
-    onUserChange: function(user) {
-        this.render(user);
+    onUserChange: function() {
+        this.render();
     },
 
     onSignOut: function() {
@@ -202,9 +201,9 @@ const AppRouter = Backbone.Router.extend({
 
 });
 
+// Retrieve signed-in user if still active from another session
+auth.fetchCurrentUser();
+
 // Initialize the app by dispatching the current route
 let appRouter = new AppRouter();
 Backbone.history.start({pushState: true});
-
-// Retrieve signed-in user if still active from another session
-auth.fetchCurrentUser();
