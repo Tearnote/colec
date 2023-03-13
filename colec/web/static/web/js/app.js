@@ -163,12 +163,54 @@ const IndexView = Backbone.View.extend({
 
 });
 
+const DashboardView = Backbone.View.extend({
+
+    tagName: "main",
+    className: "container-fluid",
+
+    html: `
+        <p>Hello world!</p>
+    `,
+
+    initialize: function() {
+        this.render();
+    },
+
+    render: function() {
+        this.el.innerHTML = this.html;
+        return this;
+    },
+
+});
+
+// Structural component of the site's primary application view
+const AppView = Backbone.View.extend({
+
+    tagName: "body",
+    header: new HeaderView(),
+    content: new DashboardView(),
+
+    initialize: function() {
+        this.render();
+    },
+
+    render: function() {
+        this.el.append(
+            this.header.el,
+            this.content.el,
+        );
+        return this;
+    },
+
+});
+
 // Primary URL router, controls which components are shown
 const AppRouter = Backbone.Router.extend({
 
     routes: {
         "": "index",
         "signin": "signIn",
+        "dashboard": "dashboard",
     },
 
     mainView: null,
@@ -176,6 +218,7 @@ const AppRouter = Backbone.Router.extend({
 
     mainViews: {
         "index": IndexView,
+        "app": AppView,
     },
 
     modal: null,
@@ -193,6 +236,11 @@ const AppRouter = Backbone.Router.extend({
         this.modal = new SignInModalView();
         this.mainView.el.append(this.modal.el);
         this.modal.on("close", function() { history.back(); });
+    },
+
+    dashboard: function() {
+        this.useMainView("app");
+        this.closeModal();
     },
 
     // Ensure that the expected base view is loaded
