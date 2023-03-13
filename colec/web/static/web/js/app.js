@@ -1,4 +1,5 @@
 import {auth, SignInModalView} from "./auth.js";
+import {dispatcher} from "./events.js";
 
 // Workaround for JetBrains bug
 // https://youtrack.jetbrains.com/issue/WEB-3552/
@@ -6,7 +7,7 @@ window.Backbone = Backbone;
 
 // Forward global key events as Backbone events
 document.addEventListener("keydown", function(e) {
-    Backbone.trigger("keydown", e.key);
+    dispatcher.trigger("keydown", e.key);
 });
 
 // Site header component
@@ -37,7 +38,7 @@ const HeaderView = Backbone.View.extend({
 
     initialize: function() {
         this.render();
-        this.listenTo(auth, "userchange", this.onUserChange);
+        this.listenTo(dispatcher, "auth:change", this.onUserChange);
     },
 
     // Render the header, with user details if logged in
@@ -235,7 +236,6 @@ const AppRouter = Backbone.Router.extend({
         this.useMainView("index");
         this.modal = new SignInModalView();
         this.mainView.el.append(this.modal.el);
-        this.modal.on("close", function() { history.back(); });
     },
 
     dashboard: function() {
@@ -252,7 +252,7 @@ const AppRouter = Backbone.Router.extend({
     },
 
     closeModal: function() {
-        this.modal?.close();
+        this.modal?.remove();
     },
 
 });

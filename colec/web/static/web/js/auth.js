@@ -1,3 +1,5 @@
+import {dispatcher} from "./events.js";
+
 // Performs user authentication tasks
 export const auth = {
 
@@ -19,7 +21,7 @@ export const auth = {
             null;
         if (this.currentUser?.id !== user?.id) {
             this.currentUser = user;
-            this.trigger("userchange", this.currentUser);
+            dispatcher.trigger("auth:change", this.currentUser);
         }
         return user;
     },
@@ -42,7 +44,8 @@ export const auth = {
         );
         if (result.success) {
             this.currentUser = json;
-            this.trigger("userchange", this.currentUser);
+            dispatcher.trigger("auth:login", this.currentUser);
+            dispatcher.trigger("auth:change", this.currentUser);
         }
         return result;
     },
@@ -64,14 +67,14 @@ export const auth = {
             json.detail,
         );
         if (result.success) {
+            dispatcher.trigger("auth:logout", this.currentUser);
             this.currentUser = null;
-            this.trigger("userchange", this.currentUser);
+            dispatcher.trigger("auth:change", this.currentUser);
         }
         return result;
     }
 
 };
-_.extend(auth, Backbone.Events);
 
 // Modal component with the user sign-in form
 export const SignInModalView = Backbone.View.extend({
@@ -111,7 +114,7 @@ export const SignInModalView = Backbone.View.extend({
 
     initialize: function() {
         this.render();
-        this.listenTo(Backbone, "keydown", this.onKeydown);
+        this.listenTo(dispatcher, "keydown", this.onKeydown);
     },
 
     render: function() {
@@ -123,15 +126,12 @@ export const SignInModalView = Backbone.View.extend({
         return this;
     },
 
-    // Close the modal
-    close: function() {
-        this.trigger("close");
-        this.remove();
-    },
-
     // Close the modal if the shroud was clicked
     onClick: function(e) {
-        if (!this.contentEl.contains(e.target)) this.close();
+        if (!this.contentEl.contains(e.target)) {
+            this.remove();
+            history.back();
+        }
     },
 
     // Attempt login with user-provided details
@@ -142,14 +142,17 @@ export const SignInModalView = Backbone.View.extend({
         const inputs = this.formEl.elements;
         const result = await auth.login(inputs.username.value, inputs.password.value);
         if (result.success)
-            this.close();
+            this.remove();
         else
             this.setError(result.details);
     },
 
     // Close the modal if esc was pressed
     onKeydown: function(key) {
-        if (key === "Escape") this.close();
+        if (key === "Escape") {
+            this.remove();
+            history.back();
+        }
     },
 
     // Display an error string to the user
