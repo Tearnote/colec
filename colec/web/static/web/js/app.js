@@ -178,18 +178,21 @@ const AppRouter = Backbone.Router.extend({
         "index": IndexView,
     },
 
+    modal: null,
+
     // Show the landing page
     index: function() {
         this.useMainView("index");
+        this.closeModal();
     },
 
     // Show the sign-in modal
     // If navigated to directly, the modal will have the landing page below
     signIn: function() {
         this.useMainView("index");
-        const signInModalView = new SignInModalView();
-        this.mainView.el.append(signInModalView.el);
-        signInModalView.on("close", function() { history.back(); });
+        this.modal = new SignInModalView();
+        this.mainView.el.append(this.modal.el);
+        this.modal.on("close", function() { history.back(); });
     },
 
     // Ensure that the expected base view is loaded
@@ -198,6 +201,10 @@ const AppRouter = Backbone.Router.extend({
         this.mainView = new this.mainViews[viewName]();
         this.mainViewName = viewName;
         document.body.replaceWith(this.mainView.el);
+    },
+
+    closeModal: function() {
+        this.modal?.close();
     },
 
 });
