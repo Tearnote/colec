@@ -237,7 +237,8 @@ const AppRouter = Backbone.Router.extend({
     // Show the sign-in modal
     // If navigated to directly, the modal will have the landing page below
     signIn: function() {
-        this.useMainView("index");
+        if (!this.mainViewName)
+            this.useMainView("index");
         this.modal = new SignInModalView();
         this.mainView.el.append(this.modal.el);
     },
