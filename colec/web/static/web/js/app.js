@@ -224,6 +224,10 @@ const AppRouter = Backbone.Router.extend({
 
     modal: null,
 
+    initialize: function() {
+        this.listenTo(dispatcher, "auth:login", this.onLogin);
+    },
+
     // Show the landing page
     index: function() {
         this.useMainView("index");
@@ -253,6 +257,11 @@ const AppRouter = Backbone.Router.extend({
 
     closeModal: function() {
         this.modal?.remove();
+    },
+
+    onLogin: function() {
+        if (this.mainViewName === "index")
+            this.navigate("dashboard", {trigger: true});
     },
 
 });
