@@ -197,6 +197,7 @@ const AppRouter = Backbone.Router.extend({
         if (!this.contentView) this.index();
         const signInModalView = new SignInModalView();
         this.contentView.el.append(signInModalView.el);
+        signInModalView.on("close", function() { history.back(); });
     },
 
 });

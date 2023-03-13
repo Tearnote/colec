@@ -124,11 +124,9 @@ export const SignInModalView = Backbone.View.extend({
     },
 
     // Close the modal
-    // Since the modal is associated with a URL fragment, we go back to
-    // the view that spawned it
     close: function() {
+        this.trigger("close");
         this.remove();
-        history.back();
     },
 
     // Close the modal if the shroud was clicked
